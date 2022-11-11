@@ -10,5 +10,11 @@ async function insertNewGame(game: Game) {
 async function getGames() {
   return await connection.query("SELECT * FROM games;");
 }
+async function getGameById(id: string) {
+  return await connection.query("SELECT * FROM games WHERE id = $1", [id]);
+}
+async function deleteGameById(id: string) {
+  return await connection.query("DELETE FROM games WHERE id = $1", [id]);
+}
 
-export { insertNewGame, getGames };
+export { insertNewGame, getGames, getGameById, deleteGameById };
