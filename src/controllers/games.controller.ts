@@ -6,6 +6,7 @@ import {
   getGameById,
   deleteGameById,
   getGameByTitle,
+  updatePriceOfGame,
 } from "../repositories/games.repository.js";
 
 async function insertGame(req: Request, res: Response) {
@@ -46,5 +47,21 @@ async function deleteGame(req: Request, res: Response) {
     res.sendStatus(500);
   }
 }
+async function updateGame(req: Request, res: Response) {
+  const { id } = req.params;
+  const { price } = req.body;
+  try {
+    const game = await getGameById(id);
+    if (game.rowCount === 0) {
+      return res.status(404).send({
+        message: "this game does not exist",
+      });
+    }
+    updatePriceOfGame({ price, id });
+    res.sendStatus(200);
+  } catch (error) {
+    res.sendStatus(500);
+  }
+}
 
-export { insertGame, listGames, deleteGame };
+export { insertGame, listGames, deleteGame, updateGame };

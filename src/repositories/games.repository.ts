@@ -21,5 +21,18 @@ async function getGameByTitle(title: string) {
     title,
   ]);
 }
+async function updatePriceOfGame(game: { price: string; id: string }) {
+  return connection.query("UPDATE games SET price = $1 WHERE id = $2;", [
+    game.price,
+    game.id,
+  ]);
+}
 
-export { insertNewGame, getGames, getGameById, deleteGameById, getGameByTitle };
+export {
+  insertNewGame,
+  getGames,
+  getGameById,
+  deleteGameById,
+  getGameByTitle,
+  updatePriceOfGame,
+};
