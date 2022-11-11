@@ -5,11 +5,18 @@ import {
   getGames,
   getGameById,
   deleteGameById,
+  getGameByTitle,
 } from "../repositories/games.repository.js";
 
 async function insertGame(req: Request, res: Response) {
   const { title, price, genre, description } = req.body as Game;
   try {
+    const game = await getGameByTitle(title);
+    if (game.rowCount !== 0) {
+      return res
+        .status(409)
+        .send({ message: "There is already a game with that name" });
+    }
     await insertNewGame({ title, price: price.toString(), genre, description });
     res.sendStatus(201);
   } catch (error) {
