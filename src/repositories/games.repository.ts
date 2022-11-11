@@ -1,3 +1,4 @@
+import { QueryParse } from "pg";
 import connection from "../database/database.js";
 import { Game } from "../protocols/game";
 
@@ -9,6 +10,11 @@ async function insertNewGame(game: Game) {
 }
 async function getGames() {
   return await connection.query("SELECT * FROM games;");
+}
+async function getGameByGenre(genre) {
+  return await connection.query("SELECT * FROM games WHERE genre = $1", [
+    genre,
+  ]);
 }
 async function getGameById(id: string) {
   return await connection.query("SELECT * FROM games WHERE id = $1", [id]);
@@ -35,4 +41,5 @@ export {
   deleteGameById,
   getGameByTitle,
   updatePriceOfGame,
+  getGameByGenre,
 };

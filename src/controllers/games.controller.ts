@@ -7,6 +7,7 @@ import {
   deleteGameById,
   getGameByTitle,
   updatePriceOfGame,
+  getGameByGenre,
 } from "../repositories/games.repository.js";
 
 async function insertGame(req: Request, res: Response) {
@@ -25,9 +26,14 @@ async function insertGame(req: Request, res: Response) {
   }
 }
 async function listGames(req: Request, res: Response) {
+  const { genre } = req.query;
   try {
+    if (genre) {
+      const games = await getGameByGenre(genre);
+      return res.status(200).send(games.rows);
+    }
     const games = await getGames();
-    res.send(games.rows);
+    res.status(200).send(games.rows);
   } catch (error) {
     res.sendStatus(500);
   }
