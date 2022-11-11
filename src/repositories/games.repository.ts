@@ -7,5 +7,8 @@ async function insertNewGame(game: Game) {
     [game.title, game.price, game.genre, game.description]
   );
 }
+async function getGames() {
+  return await connection.query("SELECT * FROM games;");
+}
 
-export { insertNewGame };
+export { insertNewGame, getGames };
