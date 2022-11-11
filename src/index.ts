@@ -1,19 +1,8 @@
 import express from "express";
-import dotenv from "dotenv";
-import { Game } from "./protocols/game";
-import { Request, Response } from "express";
-// import cors from "cors";
-dotenv.config();
+import { gamesRoutes } from "./routes/games.routes.js";
 
 const server = express();
 server.use(express.json());
-// server.use(cors());
+server.use(gamesRoutes);
 
-server.post("/", (req: Request, res: Response) => {
-  const game = req.body as Game;
-  res.send(game);
-});
-
-server.listen(process.env.PORT, () =>
-  console.log(`Listening on port ${process.env.PORT}`)
-);
+server.listen(4000, () => console.log(`Listening on port 4000`));
