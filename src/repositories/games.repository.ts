@@ -1,5 +1,4 @@
 import { QueryResult } from "pg";
-import QueryString from "qs";
 import connection from "../database/database.js";
 import { Game } from "../protocols/game";
 
@@ -12,9 +11,7 @@ async function insertNewGame(game: Game): Promise<QueryResult> {
 async function getGames(): Promise<QueryResult<Game[]>> {
   return await connection.query("SELECT * FROM games;");
 }
-async function getGameByGenre(
-  genre: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[]
-): Promise<QueryResult<Game[]>> {
+async function getGameByGenre(genre: string): Promise<QueryResult<Game[]>> {
   return await connection.query("SELECT * FROM games WHERE genre = $1", [
     genre,
   ]);
