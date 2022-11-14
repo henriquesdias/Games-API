@@ -17,6 +17,11 @@ Result is a array of objects with the following format:
 | :---------- | :--------- | :---- | :------| :---|
 | `1` | `Hollow Knight` | `metroidvania` | `120`  | `the best metroidvania in history`
 
+You can pass a query string to filter only games that you want:
+
+```http 
+  get localhost:4000/game?genre=survival
+````
 #### Insert a new game
 
 ```http
