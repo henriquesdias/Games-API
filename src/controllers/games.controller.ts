@@ -27,7 +27,7 @@ async function insertGame(req: Request, res: Response) {
   }
 }
 async function listGames(req: Request, res: Response) {
-  const { genre } = req.query;
+  const { genre } = req.query as { genre: string };
   try {
     if (genre) {
       const games = await getGameByGenre(genre);
@@ -55,9 +55,9 @@ async function deleteGame(req: Request, res: Response) {
   }
 }
 async function updateGame(req: Request, res: Response) {
-  const { id } = req.params;
-  const { price } = req.body;
-  const validate = priceSchema.validate({ price });
+  const { id } = req.params as { id: string };
+  const newValue = req.body as { price: string };
+  const validate = priceSchema.validate({ newValue });
   if (validate.error) {
     return res.status(422).send(validate.error.details.map((e) => e.message));
   }
@@ -68,7 +68,7 @@ async function updateGame(req: Request, res: Response) {
         message: "this game does not exist",
       });
     }
-    updatePriceOfGame({ price, id });
+    updatePriceOfGame({ price: newValue.price, id });
     res.sendStatus(200);
   } catch (error) {
     res.sendStatus(500);
