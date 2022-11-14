@@ -11,7 +11,7 @@ import {
 } from "../repositories/games.repository.js";
 import { priceSchema } from "../schemas/games.js";
 
-async function insertGame(req: Request, res: Response) {
+async function insertGame(req: Request, res: Response): Promise<Response> {
   const { title, price, genre, description } = res.locals.body as Game;
   try {
     const game = await getGameByTitle(title);
@@ -26,7 +26,7 @@ async function insertGame(req: Request, res: Response) {
     res.sendStatus(500);
   }
 }
-async function listGames(req: Request, res: Response) {
+async function listGames(req: Request, res: Response): Promise<Response> {
   const { genre } = req.query as { genre: string };
   try {
     if (genre) {
@@ -39,7 +39,7 @@ async function listGames(req: Request, res: Response) {
     res.sendStatus(500);
   }
 }
-async function deleteGame(req: Request, res: Response) {
+async function deleteGame(req: Request, res: Response): Promise<Response> {
   const { id } = req.params;
   try {
     const game = await getGameById(id);
@@ -54,7 +54,7 @@ async function deleteGame(req: Request, res: Response) {
     res.sendStatus(500);
   }
 }
-async function updateGame(req: Request, res: Response) {
+async function updateGame(req: Request, res: Response): Promise<Response> {
   const { id } = req.params as { id: string };
   const newValue = req.body as { price: string };
   const validate = priceSchema.validate({ newValue });
